@@ -12,3 +12,7 @@ INSERT INTO orders (customer_id, order_info) values ((SELECT customer_id FROM cu
 
 INSERT INTO users (username,password,enabled) values ('user','password',true);
 INSERT INTO users (username,password,enabled) values ('admin','password',true);
+
+INSERT INTO authorities (username,authority) values ('user','ROLE_USER');
+INSERT INTO authorities (username,authority) values ('admin','ROLE_USER');
+INSERT INTO authorities (username,authority) values ('admin','ROLE_ADMIN');
