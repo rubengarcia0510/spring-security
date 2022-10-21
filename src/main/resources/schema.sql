@@ -12,3 +12,18 @@ CREATE TABLE orders(
     order_info varchar (2048) not null,
     foreign key (customer_id) references customers(customer_id)
 );
+
+CREATE TABLE users(
+	username VARCHAR(50) not null primary key,
+	password VARCHAR(500) not null,
+	enabled BOOLEAN not null
+);
+
+CREATE TABLE authorities(
+	username VARCHAR(50) not null,
+	authority VARCHAR(50) not null,
+	constraint fk_authorities_users foreign key (username) references users(username)
+);
+
+CREATE UNIQUE INDEX ix_authorities_users on authorities (username,authority);
+
