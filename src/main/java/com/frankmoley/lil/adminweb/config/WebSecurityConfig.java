@@ -1,5 +1,7 @@
 package com.frankmoley.lil.adminweb.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,7 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.core.userdetails.User;
 
 @Configuration
@@ -28,16 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Bean
-	@Override
-	protected UserDetailsService userDetailsService() {
-		// TODO Auto-generated method stub
-		UserDetails user= User.withDefaultPasswordEncoder()
-						.username("user")
-						.password("password")
-						.roles("USER")
-						.build();
+	protected UserDetailsService users(DataSource dataSource) {
+		// TODO Auto-generated method stu
 								
-		return new InMemoryUserDetailsManager(user);
+		return new JdbcUserDetailsManager(dataSource);
+	}
+	
+	@Bean
+	public static PasswordEncoder getPasswordEncoder() {
+		return NoOpPasswordEncoder.getInstance();
 	}
 	
 
